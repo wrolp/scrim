@@ -23,6 +23,7 @@ public class DatabaseLoader implements CommandLineRunner {
         System.err.println("Init Database!!!");
         User user = new User();
         user.setUsername("scrimadm");
+        user.setPassword("scrim@11");
         user.setEmail("scrimadm@scrim.io");
         user.setCompany("Scrim CO. LT");
         user.setPhone("111-2300-25848-1");
