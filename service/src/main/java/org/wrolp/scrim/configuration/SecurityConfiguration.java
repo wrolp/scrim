@@ -1,5 +1,7 @@
 package org.wrolp.scrim.configuration;
 
+import java.io.Writer;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -29,7 +31,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
-                .defaultSuccessUrl("/", true)
+                .loginPage("/login")
+                .loginProcessingUrl("/login")
+                .successHandler((request, response, authentication) -> {
+                    Writer writer = response.getWriter();
+                    writer.write("{\"success\": true}");
+                    writer.flush();
+                })
+                .failureHandler((request, response, exception) -> {
+                    Writer writer = response.getWriter();
+                    writer.write("{\"success\": false}");
+                    writer.flush();
+                })
                 .permitAll()
                 .and()
             .httpBasic()
