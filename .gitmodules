@@ -1,0 +1,3 @@
+[submodule "entry"]
+	path = entry
+	url = ../scrim-entry
