@@ -12,6 +12,8 @@ import javax.persistence.Table;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "user")
 public class User {
@@ -77,6 +79,7 @@ public class User {
         this.registerDate = registerDate;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }

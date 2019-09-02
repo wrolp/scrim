@@ -27,7 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         // @formatter:off
         http
             .authorizeRequests()
-                .antMatchers("/static/**").permitAll()
+                .antMatchers("/static/**", "/logout").permitAll()
                 .anyRequest().authenticated()
                 .and()
             .formLogin()
@@ -45,11 +45,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 })
                 .permitAll()
                 .and()
-            .httpBasic()
-                .and()
+            .httpBasic().disable()
+//                .and()
             .csrf().disable()
             .logout()
-                .logoutSuccessUrl("/");
+                .logoutUrl("/logout")
+                .logoutSuccessHandler((request, response, authentication) -> {
+                    Writer writer = response.getWriter();
+                    writer.write("{\"success\": true}");
+                    writer.flush();
+                });
         // @formatter:on
     }
 
